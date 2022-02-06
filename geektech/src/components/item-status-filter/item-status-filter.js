@@ -2,27 +2,49 @@ import React from 'react';
 
 import './item-status-filter.css';
 
-const ItemStatusFilter = ({onStatusChange, statuses}) => {
+const ItemStatusFilter = ({onToggleFilter, filter}) => {
   return (
     <div className="btn-group">
-      <button onClick={() => {onStatusChange('all')}}
+      <button onClick={() => onToggleFilter('all')}
+              style={filter==='all' ? {
+                  backgroundColor: '#17a2b8',
+                  color:'#fff',
+                  borderColor: '#17a2b8',
+                  boxShadow: '0 0 0 0.2rem rgb(23 162 184 / 50%)'
+              } : {
+                  backgroundColor: 'transparent',
+                  color:'#6c757d',
+                  borderColor: '#6c757d'
+              }}
               type="button"
-              // className="btn btn-info"
-          className={statuses === 'all' ? 'btn btn-info' : 'btn btn-outline-secondary'}
-      >
-          All</button>
-      <button onClick={() => {onStatusChange('active')}}
+              className="btn btn-info">All</button>
+      <button onClick={() => onToggleFilter('active')}
+              style={filter==='active' ? {
+                  backgroundColor: '#17a2b8',
+                  color:'#fff',
+                  borderColor: '#17a2b8',
+                  boxShadow: '0 0 0 0.2rem rgb(23 162 184 / 50%)'
+
+              } : {
+                  backgroundColor: 'transparent',
+                  color:'#6c757d',
+                  borderColor: '#6c757d'
+              }}
               type="button"
-              // className="btn btn-outline-secondary"
-              className={statuses === 'active' ? 'btn btn-info' : 'btn btn-outline-secondary'}
-      >
-          Active</button>
-      <button onClick={() => {onStatusChange('done')}}
+              className="btn btn-outline-secondary">Active</button>
+      <button onClick={() => onToggleFilter('done')}
+              style={filter==='done' ? {
+                  backgroundColor: '#17a2b8',
+                  color:'#fff',
+                  borderColor: '#17a2b8',
+                  boxShadow: '0 0 0 0.2rem rgb(23 162 184 / 50%)'
+              } : {
+                  backgroundColor: 'transparent',
+                  color:'#6c757d',
+                  borderColor: '#6c757d'
+              }}
               type="button"
-              // className="btn btn-outline-secondary"
-              className={statuses === 'done' ? 'btn btn-info' : 'btn btn-outline-secondary'}
-      >
-          Done</button>
+              className="btn btn-outline-secondary">Done</button>
     </div>
   );
 };
