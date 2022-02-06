@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a61be8b0-fb3b-4c28-bb52-2fb045ad48fb" name="Default Changelist" comment="" />
+    <list default="true" id="a61be8b0-fb3b-4c28-bb52-2fb045ad48fb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/todo-search/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/todo-search/todo-search.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/todo-status-filter/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/todo-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/todo-header/todo-header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/todo-list-item.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/todo-list-item/todo-list-item.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/todo-list.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/todo-list/todo-list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/todo-search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/todo-search/todo-search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/todo-status-filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/todo-status-filter/todo-status-filter.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +25,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
@@ -21,6 +35,7 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="249as5T44nlH8FeXxdkNVtA7ZAX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -38,6 +53,23 @@
     <property name="node.js.selected.package.standard" value="" />
     <property name="settings.editor.selected.configurable" value="reference.idesettings.emmet.xml" />
   </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -51,6 +83,7 @@
       <workItem from="1643045462690" duration="89000" />
       <workItem from="1643090354834" duration="7064000" />
       <workItem from="1643190032968" duration="443000" />
+      <workItem from="1644150343396" duration="40000" />
     </task>
     <servers />
   </component>
