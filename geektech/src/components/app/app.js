@@ -5,150 +5,151 @@ import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
 import TodoAdd from '../todo-add';
+import Login from '../login';
+import TodoApi from "../../services/todo-api";
 
 import './app.css';
 
 
 class App extends React.Component {
-  state = {
-      todos: [
-        { label: 'Drink Coffee', important: false, id: 1, done: false },
-        { label: 'Make Awesome App', important: true, id: 2, done: false },
-        { label: 'Have a lunch', important: false, id: 3, done: false },
-        { label: 'Drink vodka', important: true, id: 4, done: false },
-        { label: 'Drink mojito', important: false, id: 5, done: false },
-      ],
-      filter: 'all',
-      searchString: '',
-  }
-
-  onDelete = (id) => {
-    this.setState((oldState) => {
-      const idx = oldState.todos.findIndex((item) => item.id === id)
-      const prev = oldState.todos.slice(0, idx)
-      const next = oldState.todos.slice(idx + 1)
-
-      return {
-        todos: [...prev, ...next]
-      }
-    })
-  }
-
-  onToggleImportant = (id) => {
-    this.setState((oldState) => {
-      const idx = oldState.todos.findIndex((item) => item.id === id)
-
-      const prev = oldState.todos.slice(0, idx)
-      const current = oldState.todos[idx]
-      const next = oldState.todos.slice(idx + 1)
-
-
-      return {
-        todos: [
-          ...prev,
-          {...current, important: !current.important},
-          ...next
-        ]
-      }
-    })
-  }
-  onToggleDone =(id)=>{
-      this.setState((oldState)=>{
-          const idx =oldState.todos.findIndex((item)=>item.id===id)
-          const prev = oldState.todos.slice(0, idx,)
-          const current =oldState.todos[idx]
-          const next =oldState.todos.slice(idx+1)
-          return{
-              todos:[
-                  ...prev,
-                  {...current, done: !current.done},
-                  ...next
-              ]
-          }
-      })
-  }
-
-  onToggleFilter = (status) => {
-    this.setState({
-      filter: status
-    })
-  }
-
-  onStatusFilter = (todos, status) => {
-    if (status === 'active') {
-      return todos.filter((item) => item.done === false)
-    } else if (status === 'done') {
-      return todos.filter((item) => item.done === true)
-    } else {
-      return todos
+    state = {
+        todos: [],
+        filter: 'all',
+        searchString: '',
     }
-  }
 
-  onSearchFilter = (todos, searchString) => {
-    const result = todos.filter((todo) => todo.label.toLowerCase().includes(searchString.toLowerCase()))
-    return result
-  }
-
-  onSearchChange = (searchString) => {
-    this.setState({
-      searchString: searchString
-    })
-  }
-
-  addNewTodo = (labelText) => {
-    this.setState((oldState) => {
+    todoApi = new TodoApi()
 
 
+    onToggleFilter = (status) => {
+        this.setState({
+            filter: status
+        })
+    }
 
-        const ids = oldState.todos.map((item) => {
-            return item.id})
+    onStatusFilter = (todos, status) => {
+        if (status === 'active') {
+            return todos.filter((item) => item.done === false)
+        } else if (status === 'done') {
+            return todos.filter((item) => item.done === true)
+        } else {
+            return todos
+        }
+    }
 
-        const maxId = Math.max(...ids) + 1
+    onSearchFilter = (todos, searchString) => {
+        const result = todos.filter((todo) => todo.label.toLowerCase().includes(searchString.toLowerCase()))
+        return result
+    }
 
-      const newTodo = {
-        id: maxId,
-        label: labelText,
-        important: false,
-        done: false
-      }
+    onSearchChange = (searchString) => {
+        this.setState({
+            searchString: searchString
+        })
+    }
 
-      return {todos: [...oldState.todos, newTodo]}
-    })
-  }
 
-  render() {
-      const filteredTodos = this.onStatusFilter(this.state.todos, this.state.filter);
-      const filterBySearchTodos = this.onSearchFilter(filteredTodos, this.state.searchString);
+    onDelete = (id) => {
+        this.todoApi.deleteTodos(id).then(data => {
+            this.onLoadTodos()
+        })
+    }
 
-      const doneTodos = this.state.todos.filter((obj)=>{
-          return (obj.done===true)
-      })
-      const todo = this.state.todos.filter( (obj)=>{
-          return (obj.done===false)
-      })
-    return (
-      <div className="todo-app">
-        <AppHeader toDo={todo.length} done={doneTodos.length} />
+    onLoadTodos = () => {
+        this.todoApi.getTodos().then(todos => {
+            this.setState({
+                todos: todos
+            })
+        })
+    }
 
-        <div className="top-panel d-flex">
+    addNewTodo = (labelText) => {
+        this.todoApi.createTodo(labelText).then(data => {
+            this.onLoadTodos()
+        })
+    }
 
-          <SearchPanel onSearchChange={this.onSearchChange} />
+    onToggleImportant = (id) => {
 
-          <ItemStatusFilter onToggleFilter={this.onToggleFilter} filter={this.state.filter} />
+        const idx = this.state.todos.findIndex((item) => item.id === id)
+        const old = this.state.todos[idx]
 
-        </div>
+        const newTodo = {
+            label: old.label,
+            important: !old.important,
+            done: old.done,
+        }
 
-        <TodoList
-          onDelete={this.onDelete}
-          onToggleImportant={this.onToggleImportant}
-          onToggleDone={this.onToggleDone}
-          todos={filterBySearchTodos}
-        />
+        this.todoApi.updateTodo(old.id, newTodo).then(data => {
+            this.onLoadTodos()
+        })
 
-        <TodoAdd addNewTodo={this.addNewTodo} />
-      </div>
-    );
-  }
+    }
+
+    onToggleDone = (id) => {
+        const idx = this.state.todos.findIndex((item) => item.id === id)
+        const old = this.state.todos[idx]
+
+        const newTodo = {
+            label: old.label,
+            important: old.important,
+            done: !old.done
+        }
+
+        this.todoApi.updateTodo(old.id, newTodo).then(data =>{
+            this.onLoadTodos()
+        })
+    }
+
+    componentDidMount = () => {
+        const credentials = localStorage.getItem('credentials')
+        if (credentials) {
+            this.onLoadTodos()
+        }
+
+    }
+
+    render() {
+        const credentials = localStorage.getItem('credentials')
+
+        if (credentials) {
+            const filteredTodos = this.onStatusFilter(this.state.todos, this.state.filter);
+            const filterBySearchTodos = this.onSearchFilter(filteredTodos, this.state.searchString);
+
+            const doneTodos = this.state.todos.filter((obj) => {
+                return (obj.done === true)
+            })
+            const todo = this.state.todos.filter((obj) => {
+                return (obj.done === false)
+            })
+            return (
+                <div className="todo-app">
+                    <AppHeader toDo={todo.length} done={doneTodos.length}/>
+
+                    <div className="top-panel d-flex">
+
+                        <SearchPanel onSearchChange={this.onSearchChange}/>
+
+                        <ItemStatusFilter onToggleFilter={this.onToggleFilter} filter={this.state.filter}/>
+
+                    </div>
+
+                    <TodoList
+                        onDelete={this.onDelete}
+                        onToggleImportant={this.onToggleImportant}
+                        onToggleDone={this.onToggleDone}
+                        todos={filterBySearchTodos}
+                    />
+
+                    <TodoAdd addNewTodo={this.addNewTodo}/>
+                </div>
+            );
+        } else {
+            return <Login />
+        }
+
+
+    }
 };
 
 export default App;
